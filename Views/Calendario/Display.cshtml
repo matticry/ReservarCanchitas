@@ -1,0 +1,364 @@
+<header>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</header>
+
+
+
+<style>
+.reservas-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333; /* Color de fondo del contenedor */
+        }
+
+        .reservas-title {
+            color: #FFF;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 96px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 305px;
+            height: 89px;
+            flex-shrink: 0;
+            margin: 0; /* Elimina el margen predeterminado del h1 */
+        }
+
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown {
+            width: 302px;
+            height: 60px;
+            border-radius: 8px;
+            background: #FFF;
+            box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.10);
+            margin-right: 10px; /* Ajusta el espacio entre el título y el dropdown */
+        }
+
+        .dropdown select {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            background: #FFF;
+        }
+
+        .button {
+            background-color: #079204; /* Nuevo color de fondo del botón */
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 16px; /* Nuevo radio de borde del botón */
+        }
+        
+     #calendar {
+                  background-color: #ffffff; /* Cambia este color al que desees */
+                      height: 700px; /* Establece la altura deseada */
+
+     }
+
+</style>
+    
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+
+
+
+
+
+
+<body>
+
+<div class="reservas-container">
+    <h1 class="reservas-title">RESERVAS</h1>
+        
+    <br/>
+    <br/>
+        
+</div>
+
+<div class="dropdown-container">
+        <div class="dropdown">
+            <select id="canchaSelect">
+                <option value="futbol">Seleccione el tipo de cancha</option>
+                <option value="futbol">Fútbol</option>
+                <option value="basquetball">Básquetball</option>
+                <option value="tenis">Tenis</option>
+                <option value="voley">Vóley</option>
+            </select>
+        </div>
+        <button class="button" id="realizarReservaBtn">Realizar Reserva</button>
+    </div>
+    
+
+</body>
+
+
+<br/>
+
+
+
+<div id="calendar-container">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnRefresh">Refrescar</button>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+#calendar-container {
+    display: none;
+}
+    
+</style>
+
+
+<div class="modal fade" id="form-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    <span id="eventTitle"></span>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <button id="btnDelete" class="btn btn-danger btn-sm pull-right">
+                        <i class="fa-solid fa-trash-can"></i> Eliminar
+                    </button>
+                    <button id="btnEdit" class="btn btn-info btn-sm pull-right" style="margin-right:5px;">
+                        <i class="fas fa-pencil"></i> Editar
+                    </button>
+                </div><br/><br/>
+                <p id="pDetails"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<link href="~/lib/fullcalendar/packages/core/main.css" rel="stylesheet"/>
+<link href="~/lib/fullcalendar/packages/daygrid/main.css" rel="stylesheet"/>
+<link href="~/lib/fullcalendar/packages/bootstrap5/main.css" rel="stylesheet"/>
+<link href="~/lib/fullcalendar/packages/timegrid/main.css" rel="stylesheet"/>
+<link href="~/lib/fullcalendar/packages/list/main.css" rel="stylesheet"/>
+
+
+@section Scripts {
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var initialLocaleCode = "es";
+            var calendarEl = document.getElementById("calendar");
+            
+        $('#realizarReservaBtn').click(function () {
+                // Get the selected value from the dropdown
+                var selectedOption = $('#canchaSelect').val();
+
+                if (selectedOption !== 'Seleccione el tipo de cancha') {
+                    // Show the calendar container
+                    $('#calendar-container').show();
+
+                } else {
+                    // Handle the case where the default option is selected
+                    alert('Por favor, seleccione el tipo de cancha antes de mostrar el calendario.');
+                }
+            });
+            
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem: 'bootstrap5',
+                timeZone: 'local',
+
+                headerToolbar: {
+                   left: "prev,next",
+                   center: "title",
+                   right: "timeGridWeek" // Cambiado de "dayGridMonth,timeGridWeek" a "timeGridWeek"
+                },
+                initialView: "timeGridWeek",
+                slotDuration: '01:00:00', // Define la duración de cada intervalo de hora
+                slotLabelFormat: {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+                },
+               
+                locale: initialLocaleCode,
+                buttonIcons: true,
+                weekNumbers: false,
+                navLinks: true,
+                editable: true,
+                dayMaxEvents: true,
+                
+                
+
+                eventClick: function (info) {
+                    var eventObj = info.event;
+                    var exteventObj = info.event.extendedProps;
+
+                    console.log(eventObj.title);
+                    $('#form-modal #eventTitle').text(eventObj.title);
+                    var $description = $('<div/ class="alert alert-secondary" role="alert" style="margin-top:3px">');
+                    $description.append($('<p/ class="alert alert-primary" role="alert">').html('<b>Cancha:</b> ' + exteventObj.nameLawyer));
+                    $description.append($('<p/ class="alert alert-primary" role="alert">').html('<b>Inicio:</b> ' + eventObj.start));
+                    if (eventObj.end != null) {
+                        $description.append($('<p/ class="alert alert-primary" role="alert">').html('<b>Fin:</b> ' + eventObj.end));
+                    }
+                    $description.append($('<p/ class="alert alert-primary" role="alert">').html('<b>Descripcion:</b> ' + exteventObj.description));
+                    $('#form-modal #pDetails').empty().html($description);
+                    
+                    $('#form-modal').on('show.bs.modal', function () {
+                            var modal = $(this);
+                            var modalDialog = modal.find('.modal-dialog');
+                            var eventTop = info.jsEvent.clientY;  // Posición Y del evento de clic
+                    
+                            // Configurar la posición vertical del modal
+                            modalDialog.css('margin-top', eventTop - modalDialog.height() / 2);
+                        });
+
+                    $('#form-modal').modal('show');
+                    
+                    bindEditAndDeleteButtons(exteventObj, eventObj);
+                    function bindEditAndDeleteButtons(exteventObj, eventObj) {
+                        $('#btnEdit').off('click').on('click', function () {
+                            window.location = '@Url.Action("Edit", "Calendario")' + '?lawyerId=' + exteventObj.lawyerId + '&id=' + eventObj.id + '';
+                        });
+                    
+                        $('#btnDelete').off('click').on('click', function () {
+                            window.location = '@Url.Action("Details", "Calendario")' + '?lawyerId=' + exteventObj.lawyerId + '&id=' + eventObj.id + '';
+                        });
+                    }
+                },
+                dateClick: function (info, jsEvent, view) {
+                    let m = moment(info.date, calendar);
+                    console.log('clicked on ' + m.format());
+                    var heading = 'Confirmar transacción de evento del calendario';
+                    var question = 'Por favor confirma que deseas crear un evento. ';
+                    var cancelButtonTxt = 'Cancelar';
+                    var okButtonTxt = 'Confirmar';
+                    var callback = function () {
+                        window.location = '@Url.Action("Create", "Calendario")' + '?eventDate=' + m.format();
+                    };
+
+                    if (info.view.type != 'month') {
+                        if (info.date > moment()) {
+                            if (confirm(heading, question, cancelButtonTxt, okButtonTxt, callback)) {
+                                callback();
+                            }
+                        }
+                    }
+                    else {
+                        $('#calendar').fullCalendar('changeView', 'agendaDay');
+                        $('#calendar').fullCalendar('gotoDate', date);
+                    }
+                },
+
+                eventRender: function (info) {
+                    var color;
+                    var vcolor = info.event.color;
+
+                    console.log(info.event.color);
+
+                    switch (vcolor) {
+                        case 1:
+                            color = "orange"
+                            break;
+                        case 2:
+                            color = "green"
+                            break;
+                        case 3:
+                            color = "red"
+                            break;
+                        case 4:
+                            color = "darkcyan"
+                            break;
+                        default:
+                    }
+                    return color;
+                },
+
+
+                events: {
+                    url: '@Url.Action("GetEvents", "Calendario")',
+                    method: 'POST',
+                    extendedProps: {
+                        url: 'info.event.extendedProps.description',
+                        nameLawyer: 'info.event.extendedProps.nameLawyer',
+                        id: 'info.event.extendedProps.Id',
+                        lawyerId: 'info.event.extendedProps.lawyerId',
+                    },
+
+                    failure: function () {
+                        alert('¡Hubo un error al buscar eventos!');
+                    },
+                    color: 'black',
+                    textColor: 'white'
+                }
+
+            });
+
+            calendar.render();
+        });
+        
+        $('#btnRefresh').click(function () {
+                calendar.refetchEvents(); // Recargar eventos del servidor
+                $('#form-modal').modal('hide'); // Ocultar modal después de la recarga
+            });
+
+
+        /* Funcion confirmacion modal*/
+        function confirm(heading, question, cancelButtonTxt, okButtonTxt, callback) {
+
+            var confirmModal =
+                $('<div class="modal fade">' +
+                    '<div class="modal-dialog">' +
+                    '<div class="modal-content">' +
+                    '<div class="modal-header">' +
+                    '<h5 class="modal-title" >' + heading + '</h5>' +
+                   // '<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>' +
+                    '</div>' +
+
+                    '<div class="modal-body">' +
+                    '<p class="alert alert-primary" role="alert">' + question + '</p>' +
+              '<img src="/images/futbol.jpg" alt="Descripción de la imagen" style="width: 100%; height: auto;">' +
+                    '</div>' +
+                    '<div class="modal-footer justify-content-center">' +
+                    '<button type="button" class="btn btn-secondary" aria-hidden="true" data-dismiss="modal">' + cancelButtonTxt + '</button>' +
+                    '<button type ="button" data-dismiss="modal" id="okButton" aria-hidden="true" class="btn btn-primary">' +
+                    okButtonTxt +
+                    '</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+
+            confirmModal.find('#okButton').click(function (event) {
+                callback();
+                confirmModal.modal('hide');
+            });
+            confirmModal.modal('show');
+        }
+
+    </script>
+}

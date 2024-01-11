@@ -1,0 +1,119 @@
+@model Agenda.Models.Dto.RegistrationModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-XXj2s1izIdI6Ux9QjFU7c5i21aNwpw4UH4qjNCnWo6s4Q8g7VyTt4A4v4kNq2dYz"
+            crossorigin="anonymous"></script>
+    <title>Registro</title>
+</head>
+
+<body>
+<div class="home-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="16" viewBox="0 0 26 16" fill="none">
+        <path d="M0.292892 7.29289C-0.0976315 7.68342 -0.0976315 8.31658 0.292892 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292892 7.29289ZM26 7L1 7V9L26 9V7Z" fill="white"/>
+    </svg>
+    <a href="/Home/Index">Home</a>
+</div>
+@Html.ValidationSummary()
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto my-4">
+            <form asp-action="Registration" method="post" enctype="multipart/form-data">
+                <h3>Registro de Usuario</h3><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" placeholder="Escriba su Nombre" asp-for="FirstName"/>
+                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input type="text" class="form-control" placeholder="Escriba su Apellido" asp-for="LastName"/>
+                            <span class="text-danger" asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" placeholder="Escriba su Email" asp-for="Email"/>
+                    <span class="text-danger" asp-validation-for="Email"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Foto de Perfil </label>
+                    <input type="file" class="form-control" asp-for="ImageFile"/>
+                    <span class="text-danger" asp-validation-for="ImageFile"></span>
+                </div>
+                <div class="form-group">
+                    <img id="imagePreview" alt="Vista previa de la imagen"
+                         style="display: none; max-width: 100%; max-height: 200px;"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" class="form-control" placeholder="Escriba su usuario" asp-for="Username"/>
+                    <span class="text-danger" asp-validation-for="Username"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Password (Example.test@123)</label>
+                    <input type="password" class="form-control" placeholder="Escriba su Contraseña" asp-for="Password"/>
+                    <span class="text-danger" asp-validation-for="Password"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Confirmar Password</label>
+                    <input type="password" class="form-control" placeholder="Confirme su Contraseña" asp-for="PasswordConfirm"/>
+                    <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
+
+                </div>
+                <br>
+                @if (TempData["msg"] != null)
+                {
+                    <div class="form-group">
+                        <span class="text-info">@TempData["msg"]</span>
+                    </div>
+                }
+                <br>
+                <button type="submit">Registrarse</button>
+
+                <br>
+                <br>
+                <div class="register-section">
+                    <h4>¿Ya tienes cuenta?</h4>
+                    <a class="text-alert" href="/UserAuthentication/Login">Inicia Sesion</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+body {
+    background: linear-gradient(0deg, rgba(17, 28, 11, 0.20) 0%, rgba(17, 28, 11, 0.20) 100%), url('/Images/vista-balon-futbol-campo 1.png') center/cover no-repeat fixed;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+h3 {
+    color: #FFF;
+    font-family: 'Actor', sans-serif;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+label {
+    width: 500px;
+    color: #FFF;
+    font-family: 'Abel', sans-serif;
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.home-link {
+    top: 20px;
+    left: 40%;
+    width: 63px;
+    height: 29px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.home-link a {
+    color: #FFF;
+    text-decoration: none;
+    font-family: 'Actor', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-right: 10px;
+    z-index: 2;
+    position: relative;
+}
+
+.home-link svg {
+    stroke-width: 2px;
+    stroke: #FFF;
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+}
+
+.container {
+    margin-top: 40px;
+}
+button {
+    width: 100%; /* Modificado para ocupar el ancho completo del contenedor */
+    height: 50px;
+    border-radius: 10px;
+    background: #079204;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.register-section {
+    display: flex; /* Muestra los elementos en línea */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    margin-top: 20px; /* Ajusta la distancia desde la parte superior de la sección de registro */
+    text-align: center; /* Centra el texto en la sección de registro */
+}
+
+.register-section h4 {
+    margin-right: 30px; /* Ajusta el espacio entre el título y el enlace de registro */
+    color: white;
+}
+
+.register-section a {
+    color: #61CF65; /* Cambia el color del enlace según tu preferencia */
+    font-weight: bold; /* Opcional: resalta el texto del enlace */
+}

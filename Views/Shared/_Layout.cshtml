@@ -1,0 +1,123 @@
+﻿
+@{
+    string username = User.Identity.Name;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Alpeloteo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                @{
+                    var routeData = ViewContext.RouteData.Values;
+                    var controller = routeData["Controller"]?.ToString();
+                    var action = routeData["Action"]?.ToString();
+                
+                    Func<string, string, string, string> buildNavLink = (linkText, ctrl, act) =>
+                    {
+                        var isActive = (controller == ctrl && action == act) ? "active-text" : "navbar-text";
+                        var activeBar = isActive == "active-text" ? "<div class='active-bar'></div>" : "";
+                        return $"<li class='nav-item'><a class='nav-link {isActive}' href='/{ctrl}/{act}'>{linkText}</a>{activeBar}</li>";
+                    };
+                }
+                <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                    @Html.Raw(buildNavLink("INICIO", "Home", "Index"))
+                    
+                    @if (!User.IsInRole("admin"))
+                    {
+                        <li class="nav-item">@Html.Raw(buildNavLink("DASHBOARD", "Dashboard", "Display"))</li>
+                        
+                                                                                                         
+                                                                                                         
+                    }
+                    <li class="nav-item" href="/Calendario/Display">@Html.Raw(buildNavLink("RESERVAS", "Calendario", "Display"))</li>
+                    
+
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li class="nav-item">@Html.Raw(buildNavLink("PAGINAADMIN", "Admin", "Display"))</li>
+                    }
+                     @Html.Raw(buildNavLink("CONTACTO", "Dashboard", "Contacto"))
+                    @Html.Raw(buildNavLink("FAQ", "Dashboard", "Faq"))
+                </ul>
+            </div>
+        </div>
+        <div class="ml-auto">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span class="navbar-text">
+                    ¡Hola, @username!
+                    
+                </span>
+                <form id="logoutForm" asp-controller="UserAuthentication" asp-action="Logout" method="post">
+                    <button type="submit" class="custom-button">
+                        CERRAR SESIÓN
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="ml-auto">
+                    <form action="@Url.Action("Login", "UserAuthentication")" method="get">
+                        <button type="submit" class="custom-button">
+                            INGRESA/REGISTRATE
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+    </nav>
+</header>
+
+
+@if (!(ViewContext.RouteData.Values["Controller"] as string == "Calendario" && ViewContext.RouteData.Values["Action"] as string == "GetEvents"))
+{
+    <div class="pagina-inicio mt-5">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/fullcalendar/packages/core/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/interaction/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/daygrid/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/bootstrap5/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/timegrid/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/list/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/moment/main.js"></script>
+    <script src="~/lib/fullcalendar/packages/moment-timezone/main.js"></script>
+    <script src="~/superagent/superagent.js"></script>
+    <script src="~/moment.js/moment.js"></script>
+    <script src="~/lib/fullcalendar/dist/index.global.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

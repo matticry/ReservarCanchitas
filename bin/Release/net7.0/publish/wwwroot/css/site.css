@@ -1,0 +1,93 @@
+/* Estilos generales */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.pagina-inicio {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(0deg, rgba(17, 28, 11, 0.20) 0%, rgba(17, 28, 11, 0.20) 100%), url('/Images/Fondo.png') center/cover no-repeat fixed;
+    padding-top: 150px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    width: 100%;
+    height: 110px;
+    flex-shrink: 0;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.nav-item {
+    position: relative;
+}
+
+.navbar-text, .active-text {
+    color: #0D0909;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 51px;
+}
+
+.active-text {
+    color: #079204 !important;
+}
+
+.active-text::after {
+    content: "";
+    position: absolute;
+    bottom: -39px;
+    left: 32%;
+    transform: translateX(-50%);
+    background: #ADFF44;
+    width: 84px;
+    height: 4px;
+}
+
+.custom-button {
+    width: 224px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #079204;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 60px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.ml-custom {
+    margin-left: 10px;
+}
+
+.ml-auto {
+    margin-right: 51px;
+}

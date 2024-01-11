@@ -1,0 +1,47 @@
+.inicio {
+    width: 1101px;
+    height: 140px;
+    flex-shrink: 0;
+    color: #FFF;
+    justify-content: center;
+    margin: 170px auto;
+    padding-left: 100px;
+}
+
+.titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.texto {
+    width: 948px;
+    height: 144px;
+    flex-shrink: 0;
+    color: #FFF;
+    text-align: justify;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.boton {
+    display: inline-block;
+    width: 321px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #079204;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none;
+    padding-top: 20px; /* Ajusta el espaciado según necesites */
+}
